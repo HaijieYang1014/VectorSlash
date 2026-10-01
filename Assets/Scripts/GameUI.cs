@@ -29,7 +29,7 @@ namespace VectorSlash
         const string TitleMessage =
             "VECTOR SLASH\n\n" +
             "Drag across meteors to slice them.\n" +
-            "Release to leave the slash behind as an energy tile (3 s, max 3).\n" +
+            "A slash that cuts nothing becomes an energy tile when released (3 s, max 3).\n" +
             "Bounce the fragments into the fuel collectors.\n" +
             "Intact meteors break tiles. Big meteors need two cuts.\n" +
             "Keep the ship alive and fueled until it arrives.\n\n" +

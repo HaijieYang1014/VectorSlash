@@ -1,0 +1,19 @@
+{
+    "name": "VectorSlash.Tests",
+    "rootNamespace": "VectorSlash.Tests",
+    "references": [
+        "VectorSlash",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "name": "VectorSlash",
+    "rootNamespace": "VectorSlash",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "autoReferenced": true
+}

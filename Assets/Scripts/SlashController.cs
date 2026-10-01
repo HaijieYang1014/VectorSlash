@@ -6,7 +6,8 @@ namespace VectorSlash
 {
     /// <summary>
     /// Turns mouse drags into slashes. While dragging, the blade cuts every intact meteor it passes
-    /// all the way through. On release, the blade becomes an energy tile at the same angle.
+    /// all the way through. On release, the blade becomes an energy tile at the same angle,
+    /// unless it cut a meteor: a slash is either a cut or a tile, never both.
     /// </summary>
     public class SlashController : MonoBehaviour
     {
@@ -31,6 +32,8 @@ namespace VectorSlash
 
         public IReadOnlyList<EnergyTile> Tiles => tiles;
         public bool IsSlashing { get; private set; }
+        /// <summary>True once the current slash has cut a meteor; releasing it then leaves no tile.</summary>
+        public bool HasCut { get; private set; }
 
         readonly List<EnergyTile> tiles = new List<EnergyTile>();
         Camera cam;
@@ -90,6 +93,7 @@ namespace VectorSlash
         public void BeginSlash(Vector2 point)
         {
             IsSlashing = true;
+            HasCut = false;
             anchor = tip = lastTip = point;
             slashId = nextSlashId++;
             UpdatePreview();
@@ -110,7 +114,7 @@ namespace VectorSlash
             if (!IsSlashing) return;
             CutMeteors();
             CancelSlash();
-            if ((tip - anchor).magnitude >= minTileLength) CreateTile(anchor, tip);
+            if (!HasCut && (tip - anchor).magnitude >= minTileLength) CreateTile(anchor, tip);
         }
 
         public void CancelSlash()
@@ -145,10 +149,17 @@ namespace VectorSlash
                 Vector2 centre = meteor.transform.position;
                 float radius = meteor.Radius;
                 if (PassesThrough(anchor, tip, centre, radius))
-                    meteor.Slice(tip - anchor, swipe, slashId);
+                    Cut(meteor, tip - anchor, swipe);
                 else if (moved && PassesThrough(lastTip, tip, centre, radius)) // fast swipes
-                    meteor.Slice(sweep, swipe, slashId);
+                    Cut(meteor, sweep, swipe);
             }
+        }
+
+        void Cut(Meteor meteor, Vector2 cutDirection, Vector2 swipe)
+        {
+            meteor.Slice(cutDirection, swipe, slashId);
+            HasCut = true;
+            UpdatePreview();
         }
 
         /// <summary>True when segment a-b goes all the way through the circle (in one side and out the other).</summary>
@@ -192,7 +203,7 @@ namespace VectorSlash
             t.localScale = new Vector3(Mathf.Max(d.magnitude, 0.05f), tileThickness * 0.6f, 1f);
 
             Color color = previewColor;
-            if (d.magnitude < minTileLength) color.a *= 0.4f; // too short to leave a tile
+            if (HasCut || d.magnitude < minTileLength) color.a *= 0.4f; // won't leave a tile
             slashPreview.color = color;
             slashPreview.enabled = true;
         }
