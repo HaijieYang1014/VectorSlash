@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d99fbd91abc1c4398a57a34f1c449f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VectorSlash.SlashController
-  tilePrefab: {fileID: 0}
+  tilePrefab: {fileID: 8631108126262449562, guid: bf10fce143aef7642a491fc51b173fb2, type: 3}
   slashPreview: {fileID: 656386659}
   maxTileLength: 3.2
   minTileLength: 0.4
@@ -312,7 +312,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ffbf1db1c495648a60cc9178bdc50f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VectorSlash.MeteorSpawner
-  meteors: []
+  meteors:
+  - prefab: {fileID: 8431899091112741135, guid: 81a5a96d5ea678446858309e9e9d4bdd, type: 3}
+    weight: 1
+    appearsAfterProgress: 0
+  - prefab: {fileID: 8431899091112741135, guid: ec8bfad2a8cf9ac4fb771a205972a174, type: 3}
+    weight: 0.3
+    appearsAfterProgress: 0.3
   target: {fileID: 1703892545}
   aimSpread: 2.5
   firstSpawnDelay: 1.5
